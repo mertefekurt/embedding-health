@@ -1,33 +1,34 @@
 # Embedding Health
 
-Check embedding JSONL files for vector quality and retrieval-risk issues. The repository is intentionally plain: a small command, a visible rule surface, and enough examples to make the behavior inspectable.
-
 ![Embedding Health cover](assets/readme-cover.svg)
 
-## Where it fits
+Check embedding JSONL files for vector quality and retrieval-risk issues. It is a compact working note as much as a project: commands, file map, and the reasoning are kept close together.
 
-- for model evaluation, traces, retrieval, and prompt review
-- quick local checks without a service dependency
-- review notes that should stay easy to reproduce
+## Working map
 
-## Run it
+![Workflow diagram](assets/readme-diagram.svg)
+
+## Command line
 
 ```bash
 git clone https://github.com/mertefekurt/embedding-health.git
 cd embedding-health
-python -m venv .venv
-source .venv/bin/activate
 python -m pip install -e ".[dev]"
 embedding-health examples/embeddings.jsonl
 ```
 
-## Project map
+## Why this shape
 
-```text
-.github/        CI workflow
-examples/       sample inputs
-src/            package source
-tests/          test coverage
-.gitignore      project file
-pyproject.toml  package metadata
+A few choices worth keeping in mind:
+
+- Designed as a focused model evaluation repo.
+- Keeps setup short.
+- Prioritizes readable output over infrastructure.
+
+## Maintenance rhythm
+
+```bash
+ruff check .
+pytest
+python -m embedding_health --help
 ```
