@@ -1,35 +1,27 @@
-<p align="center">
-  <img src="assets/readme-cover.svg" alt="Embedding Health cover" width="100%" />
-</p>
-
 # Embedding Health
 
-![stack](https://img.shields.io/badge/stack-Python-0891b2?style=flat-square) ![python](https://img.shields.io/badge/python-3.11-b45309?style=flat-square) ![license](https://img.shields.io/badge/license-MIT-be185d?style=flat-square) ![ci](https://img.shields.io/badge/ci-GitHub%20Actions-4b5563?style=flat-square)
+Check embedding JSONL files for vector quality and retrieval-risk issues. The repository is intentionally plain: a small command, a visible rule surface, and enough examples to make the behavior inspectable.
 
-Check embedding JSONL files for vector quality and retrieval-risk issues.
+![Embedding Health cover](assets/readme-cover.svg)
 
-## Good for
+## Where it fits
 
-- quick local checks around embedding systems
-- small CI jobs where a readable report is enough
-- review workflows that need deterministic output
-- examples based on `examples/embeddings.jsonl`
+- for model evaluation, traces, retrieval, and prompt review
+- quick local checks without a service dependency
+- review notes that should stay easy to reproduce
 
 ## Run it
 
 ```bash
+git clone https://github.com/mertefekurt/embedding-health.git
+cd embedding-health
+python -m venv .venv
+source .venv/bin/activate
 python -m pip install -e ".[dev]"
 embedding-health examples/embeddings.jsonl
 ```
 
-## Project notes
-
-- Command: `embedding-health`
-- Language: Python
-- Python: `>=3.11`
-- Tests: `pytest`
-
-## Layout
+## Project map
 
 ```text
 .github/        CI workflow
@@ -38,13 +30,4 @@ src/            package source
 tests/          test coverage
 .gitignore      project file
 pyproject.toml  package metadata
-```
-
-## Check locally
-
-```bash
-python -m pip install -e ".[dev]"
-ruff check .
-pytest
-python -m embedding_health --help
 ```
