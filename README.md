@@ -1,67 +1,50 @@
-# embedding-health
+<p align="center">
+  <img src="assets/readme-cover.svg" alt="Embedding Health cover" width="100%" />
+</p>
 
-`embedding-health` is a CLI for checking embedding JSONL files before they are loaded into
-a vector database. It catches common quality problems that can quietly degrade retrieval:
-dimension drift, zero vectors, non-finite values, duplicate vectors, norm outliers, and
-near-identical vectors attached to different text.
+# Embedding Health
 
-## Why it is useful
+![stack](https://img.shields.io/badge/stack-Python-0891b2?style=flat-square) ![python](https://img.shields.io/badge/python-3.11-b45309?style=flat-square) ![license](https://img.shields.io/badge/license-MIT-be185d?style=flat-square) ![ci](https://img.shields.io/badge/ci-GitHub%20Actions-4b5563?style=flat-square)
 
-RAG failures are often blamed on prompting when the retrieval layer is already damaged.
-This tool gives you a fast local QA step for embedding exports, batch jobs, and CI checks.
+Check embedding JSONL files for vector quality and retrieval-risk issues.
 
-## Key features
+## Good for
 
-- reads JSONL records with `embedding` or `vector` fields
-- validates vector dimensions and numeric values
-- flags zero vectors and norm outliers
-- detects duplicate rounded vectors
-- checks suspicious high-cosine pairs
-- emits Markdown or JSON and supports severity-based exit codes
+- quick local checks around embedding systems
+- small CI jobs where a readable report is enough
+- review workflows that need deterministic output
+- examples based on `examples/embeddings.jsonl`
 
-## Installation
+## Run it
 
 ```bash
 python -m pip install -e ".[dev]"
-```
-
-## Usage
-
-```bash
 embedding-health examples/embeddings.jsonl
-embedding-health examples/embeddings.jsonl --format json
-embedding-health embeddings.jsonl --similarity-threshold 0.995 --fail-on medium
-python -m embedding_health --help
 ```
 
-Expected JSONL shape:
+## Project notes
 
-```json
-{"id":"doc-1","text":"reset password guide","embedding":[0.12,0.04,0.91,0.31]}
+- Command: `embedding-health`
+- Language: Python
+- Python: `>=3.11`
+- Tests: `pytest`
+
+## Layout
+
+```text
+.github/        CI workflow
+examples/       sample inputs
+src/            package source
+tests/          test coverage
+.gitignore      project file
+pyproject.toml  package metadata
 ```
 
-## Workflow
-
-```mermaid
-flowchart LR
-    A[embedding JSONL] --> B[record parser]
-    B --> C[dimension and numeric checks]
-    B --> D[norm and duplicate checks]
-    B --> E[cosine similarity scan]
-    C --> F[report]
-    D --> F
-    E --> F
-```
-
-## Tests
+## Check locally
 
 ```bash
+python -m pip install -e ".[dev]"
 ruff check .
 pytest
 python -m embedding_health --help
 ```
-
-## License
-
-MIT
-
